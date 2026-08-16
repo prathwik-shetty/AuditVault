@@ -3,7 +3,8 @@ import Login from "./Login";
 import { auth } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
-const API_URL = "http://localhost:5000/api/memos";
+const API_BASE_URL = "https://auditvault-3ytx.onrender.com";
+const API_URL = `${API_BASE_URL}/api/memos`;
 
 function App() {
   const [user, setUser] = useState(null);
@@ -169,8 +170,8 @@ function App() {
     try {
       const token = await getToken();
 
-      const response = await fetch(
-        `http://localhost:5000/api/auditlogs/${memoId}`,
+     const response = await fetch(
+  `${API_BASE_URL}/api/auditlogs/${memoId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
