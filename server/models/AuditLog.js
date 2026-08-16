@@ -1,32 +1,48 @@
 const mongoose = require("mongoose");
 
-const auditLogSchema = new mongoose.Schema({
-  memoId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Memo",
-    required: true,
-  },
+const auditLogSchema = new mongoose.Schema(
+  {
+    memoId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Memo",
+      required: true,
+    },
 
-  actionType: {
-    type: String,
-    enum: ["CREATE", "READ", "UPDATE", "DELETE"],
-    required: true,
-  },
+    actionType: {
+      type: String,
+      enum: ["CREATE", "READ", "UPDATE", "DELETE"],
+      required: true,
+    },
 
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
+    timestamp: {
+      type: Date,
+      default: Date.now,
+    },
 
-  userId: {
-    type: String,
-    required: true,
-  },
+    userId: {
+      type: String,
+      required: true,
+    },
 
-  ipAddress: {
-    type: String,
-    required: true,
+    ipAddress: {
+      type: String,
+      required: true,
+    },
+
+    previousHash: {
+      type: String,
+      default: null,
+    },
+
+    currentHash: {
+      type: String,
+      required: true,
+      immutable: true,
+    },
   },
-});
+  {
+    timestamps: false,
+  }
+);
 
 module.exports = mongoose.model("AuditLog", auditLogSchema);

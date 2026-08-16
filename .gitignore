@@ -18,3 +18,8 @@ Thumbs.db
 
 # VS Code
 .vscode/
+
+# Firebase Admin private key
+firebase-service-account.json
+
+*-firebase-adminsdk-*.json

@@ -5,6 +5,7 @@ const memoSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
 
     content: {
@@ -12,9 +13,9 @@ const memoSchema = new mongoose.Schema(
       required: true,
     },
 
-    createdBy: {
+    ownerId: {
       type: String,
-      default: "Admin",
+      required: true,
     },
   },
   {

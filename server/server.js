@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const memoRoutes = require("./routes/memoRoutes");
+const auditRoutes = require("./routes/auditRoutes");
 const app = express();
 
 app.use(express.json());
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/memos", memoRoutes);
+app.use("/api/auditlogs", auditRoutes);
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
