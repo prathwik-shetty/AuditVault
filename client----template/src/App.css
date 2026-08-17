@@ -707,109 +707,169 @@ main > section:nth-of-type(4) article p {
 }
 /* LOGIN PAGE */
 
+/* =========================
+   LOGIN PAGE
+========================= */
+
 .login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(37, 99, 235, 0.14),
-      transparent 35%
-    ),
-    #070b14;
+  padding: 24px;
+  box-sizing: border-box;
 }
 
+/* Main login card */
 .login-card {
-  width: min(390px, 100%);
-  padding: 34px;
-  border: 1px solid #1e293b;
-  border-radius: 18px;
-  background: #0d1422;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 390px;
+  padding: 36px;
+  box-sizing: border-box;
+
+  background: #e0f2fe;
+  color: #0f172a;
+
+  border: 1px solid #7dd3fc;
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.35),
+    0 0 30px rgba(56, 189, 248, 0.12);
+
+  text-align: center;
 }
 
+/* AuditVault title */
 .login-card h1 {
   margin: 0 0 8px;
-  text-align: center;
-  color: #f8fafc;
+
+  color: #0f172a;
   font-size: 30px;
-  letter-spacing: -1px;
+  font-weight: 700;
 }
 
-.login-card h1::before {
-  content: "◆";
-  color: #60a5fa;
-  font-size: 17px;
-  margin-right: 9px;
-}
-
+/* Login / Create Account heading */
 .login-card h2 {
-  margin: 0 0 25px;
-  text-align: center;
-  color: #94a3b8;
-  font-size: 16px;
-  font-weight: 500;
+  margin: 0 0 26px;
+
+  color: #0369a1;
+  font-size: 18px;
+  font-weight: 600;
 }
 
+/* Form */
 .login-card form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
+/* Email + Password */
 .login-card input {
   width: 100%;
-  height: 42px;
-  padding: 10px 12px;
-  border: 1px solid #263449;
-  border-radius: 8px;
-  background: #080f1c;
-  color: #e5e7eb;
-  font-size: 13px;
+  padding: 13px 14px;
+  box-sizing: border-box;
+
+  background: #f0f9ff;
+  color: #0f172a;
+
+  border: 1px solid #7dd3fc;
+  border-radius: 10px;
+
+  font-size: 14px;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.login-card input::placeholder {
+  color: #64748b;
 }
 
 .login-card input:focus {
-  border-color: #3b82f6;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+  background: #ffffff;
+  border-color: #0284c7;
+
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
 }
 
-.login-card form button {
-  height: 42px;
-  margin-top: 5px;
-  border: none;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.login-card form button:hover {
-  transform: translateY(-1px);
-}
-
-.login-card > p {
-  margin: 14px 0;
-  color: #f87171;
-  font-size: 12px;
-  text-align: center;
-}
-
-.login-card > button {
+/* Login button */
+.login-button {
   width: 100%;
-  margin-top: 15px;
+  margin-top: 4px;
+  padding: 13px;
+
+  background: #2563eb;
+  color: white;
+
   border: none;
+  border-radius: 10px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+/* Error message */
+.login-error {
+  margin: 14px 0 0;
+
+  color: #dc2626;
+  font-size: 13px;
+}
+
+/* Register / Login switch */
+.register-button {
+  margin-top: 20px;
+
   background: transparent;
-  color: #60a5fa;
-  font-size: 12px;
+  color: #0369a1;
+
+  border: none;
+
+  font-size: 13px;
+  font-weight: 500;
+
   cursor: pointer;
 }
 
-.login-card > button:hover {
-  color: #93c5fd;
+.register-button:hover {
+  color: #075985;
   text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  .login-page {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 28px 22px;
+    border-radius: 16px;
+  }
+
+  .login-card h1 {
+    font-size: 26px;
+  }
 }

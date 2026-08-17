@@ -38,47 +38,58 @@ function Login({ onLogin }) {
     }
   };
 
- return (
-  <div className="login-page">
-    <div className="login-card">
-      
-      <h1>AuditVault</h1>
+  return (
+    <div className="login-page">
+      <div className="login-card">
+        <h1>◆ AuditVault</h1>
 
-      <h2>{isRegistering ? "Create Account" : "Login"}</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <button type="submit">
+        <h2>
           {isRegistering ? "Create Account" : "Login"}
+        </h2>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoComplete={
+              isRegistering ? "new-password" : "current-password"
+            }
+          />
+
+          <button type="submit" className="login-button">
+            {isRegistering ? "Create Account" : "Login"}
+          </button>
+        </form>
+
+        {error && <p className="login-error">{error}</p>}
+
+        <button
+          type="button"
+          className="register-button"
+          onClick={() => {
+            setIsRegistering(!isRegistering);
+            setError("");
+          }}
+        >
+          {isRegistering
+            ? "Already have an account? Login"
+            : "Need an account? Register"}
         </button>
-      </form>
-
-      {error && <p>{error}</p>}
-
-      <button onClick={() => setIsRegistering(!isRegistering)}>
-        {isRegistering
-          ? "Already have an account? Login"
-          : "Need an account? Register"}
-      </button>
+      </div>
     </div>
-     </div>
-
-  ); 
+  );
 }
 
-export default Login; 
+export default Login;

@@ -7,7 +7,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const API_BASE_URL = "https://auditvault-3ytx.onrender.com";
 const API_URL = `${API_BASE_URL}/api/memos`;
- 
+  
 function App() {
   const [user, setUser] = useState(null);
   const [memos, setMemos] = useState([]);
