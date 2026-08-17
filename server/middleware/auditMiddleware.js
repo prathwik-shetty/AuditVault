@@ -1,4 +1,3 @@
-const crypto = require("crypto");
 const AuditLog = require("../models/AuditLog");
 
 const auditMiddleware = (actionType) => {
@@ -8,47 +7,55 @@ const auditMiddleware = (actionType) => {
 
       res.json = async (data) => {
         try {
-          const memoId =
-            data?._id ||
-            req.params.id ||
-            req.body?._id ||
-            req.body?.memoId;
+          const userId = req.user?.uid;
 
-          if (memoId && req.user?.uid) {
-            const lastLog = await AuditLog.findOne()
-              .sort({ timestamp: -1, _id: -1 })
-              .lean();
+          const ipAddress =
+            req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
+            req.socket.remoteAddress ||
+            req.ip;
 
-            const previousHash = lastLog?.currentHash || null;
+          let memoIds = [];
 
-            const timestamp = new Date();
+          // GET /api/memos/:id
+          // UPDATE /api/memos/:id
+          // DELETE /api/memos/:id
+          if (req.params.id) {
+            memoIds.push(req.params.id);
+          }
 
-            const hashData = [
-              memoId.toString(),
-              actionType,
-              timestamp.toISOString(),
-              req.user.uid,
-              req.ip,
-              previousHash || "",
-            ].join("|");
+          // CREATE /api/memos
+          // The created memo ID comes from the response.
+          if (data?._id) {
+            memoIds.push(data._id.toString());
+          }
 
-            const currentHash = crypto
-              .createHash("sha256")
-              .update(hashData)
-              .digest("hex");
+          // GET /api/memos
+          // The response is an array of memos.
+          if (Array.isArray(data)) {
+            memoIds = data
+              .filter((memo) => memo?._id)
+              .map((memo) => memo._id.toString());
+          }
 
-            await AuditLog.create({
-              memoId,
-              actionType,
-              timestamp,
-              userId: req.user.uid,
-              ipAddress: req.ip,
-              previousHash,
-              currentHash,
-            });
+          // Remove duplicates
+          memoIds = [...new Set(memoIds)];
 
-            console.log(`Audit log created: ${actionType}`);
-            console.log(`Hash: ${currentHash}`);
+          if (userId && memoIds.length > 0) {
+            await Promise.all(
+              memoIds.map((memoId) =>
+                AuditLog.create({
+                  memoId,
+                  actionType,
+                  timestamp: new Date(),
+                  userId,
+                  ipAddress,
+                })
+              )
+            );
+
+            console.log(
+              `Audit log created: ${actionType} (${memoIds.length} memo(s))`
+            );
           }
         } catch (error) {
           console.error("Audit log failed:", error.message);
