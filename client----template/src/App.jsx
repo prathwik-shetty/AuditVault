@@ -7,7 +7,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const API_BASE_URL = "https://auditvault-3ytx.onrender.com";
 const API_URL = `${API_BASE_URL}/api/memos`;
-
+ 
 function App() {
   const [user, setUser] = useState(null);
   const [memos, setMemos] = useState([]);
@@ -296,47 +296,98 @@ function App() {
         </section>
 
         {selectedMemo && (
-          <section>
-            <h2>Memo Details</h2>
+  <div className="modal-overlay" onClick={() => setSelectedMemo(null)}>
+    <div
+      className="modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="modal-header">
+        <div>
+          <span className="modal-label">SECURE MEMO</span>
+          <h2>{selectedMemo.title}</h2>
+        </div>
 
-            <h3>{selectedMemo.title}</h3>
+        <button
+          className="modal-close"
+          onClick={() => setSelectedMemo(null)}
+        >
+          ×
+        </button>
+      </div>
 
-            <p>{selectedMemo.content}</p>
+      <div className="memo-content">
+        {selectedMemo.content}
+      </div>
 
-            <p>
-              Created:{" "}
-              {new Date(selectedMemo.createdAt).toLocaleString()}
-            </p>
+      <div className="memo-metadata">
+        <div>
+          <span>CREATED</span>
+          <strong>
+            {new Date(selectedMemo.createdAt).toLocaleString()}
+          </strong>
+        </div>
 
-            <p>
-              Updated:{" "}
-              {new Date(selectedMemo.updatedAt).toLocaleString()}
-            </p>
-          </section>
-        )}
+        <div>
+          <span>LAST UPDATED</span>
+          <strong>
+            {new Date(selectedMemo.updatedAt).toLocaleString()}
+          </strong>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+{auditLogs.length > 0 && (
+  <div
+    className="modal-overlay"
+    onClick={() => setAuditLogs([])}
+  >
+    <div
+      className="modal audit-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="modal-header">
+        <div>
+          <span className="modal-label">SECURITY LOG</span>
+          <h2>Audit Trail</h2>
+        </div>
 
-        {auditLogs.length > 0 && (
-          <section>
-            <h2>Audit Trail</h2>
+        <button
+          className="modal-close"
+          onClick={() => setAuditLogs([])}
+        >
+          ×
+        </button>
+      </div>
 
-            {auditLogs.map((log) => (
-              <article key={log._id}>
+      <div className="audit-timeline">
+        {auditLogs.map((log) => (
+          <div className="audit-event" key={log._id}>
+            <div className="audit-dot" />
+
+            <div className="audit-event-content">
+              <div className="audit-event-top">
                 <strong>{log.actionType}</strong>
 
-                <p>
-                  User: {log.userId}
-                </p>
-
-                <p>
-                  Time:{" "}
+                <span>
                   {new Date(log.timestamp).toLocaleString()}
-                </p>
+                </span>
+              </div>
 
-                <p>IP: {log.ipAddress}</p>
-              </article>
-            ))}
-          </section>
-        )}
+              <p>
+                User: {log.userId}
+              </p>
+
+              <p>
+                IP: {log.ipAddress}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
       </main>
     </div>
   );

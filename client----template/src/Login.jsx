@@ -38,8 +38,10 @@ function Login({ onLogin }) {
     }
   };
 
-  return (
-    <div>
+ return (
+  <div className="login-page">
+    <div className="login-card">
+      
       <h1>AuditVault</h1>
 
       <h2>{isRegistering ? "Create Account" : "Login"}</h2>
@@ -74,7 +76,9 @@ function Login({ onLogin }) {
           : "Need an account? Register"}
       </button>
     </div>
-  );
+     </div>
+
+  ); 
 }
 
 export default Login; 
