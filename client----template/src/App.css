@@ -512,7 +512,7 @@ main > section:nth-of-type(4) article p {
 
   min-height: 120px;
 
-  border: 1px solid #1e293b;
+  border: 1px solid #307cf5;
   border-radius: 12px;
 
   background: #080f1c;
@@ -791,7 +791,7 @@ main > section:nth-of-type(4) article p {
 }
 
 .login-card input:focus {
-  background: #ffffff;
+  background: #fafafb;
   border-color: #0284c7;
 
   box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
@@ -803,8 +803,8 @@ main > section:nth-of-type(4) article p {
   margin-top: 4px;
   padding: 13px;
 
-  background: #2563eb;
-  color: white;
+  background: #f8f8f9;
+  color: rgb(72, 101, 248);
 
   border: none;
   border-radius: 10px;
